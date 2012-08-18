@@ -1,0 +1,71 @@
+{% extends "index.html" %}
+
+{% block links %}
+{% endblock %}
+
+{% block form %}
+	<p>Points: <b> {{ points }} </b>
+{% endblock %}
+
+{% block scores %}
+	<div class=standard>
+	{% if scores %}
+		<p>Scores:</p>
+	{% endif %}
+	<ol>
+	{% for score in scores %}
+		<li><a href="/team/{{ score.home.id }}" target="_new">{{ score.home }}</a> vs. 
+			<a href="/team/{{ score.away.id }}" target="_new">{{ score.away }}</a>: 
+			<font color="{{ score.color }}">{{ score.home_score }}-{{ score.away_score }}</font>
+    {% endfor %}
+	</ol>
+	</div>
+{% endblock %}
+
+{% block rank %}
+	<div class=standard>
+		<p>Stats:</p>
+		<ul>
+			<li><b>Games: {{ stats.games }}</b>
+			<li style="color: green;">Won: {{ stats.won }}
+			<li style="color: red;">Lost: {{ stats.lost }}
+			<li style="color: blue;">Draw: {{ stats.draw }}
+			<hr>
+			<li>Goals Scored: {{ stats.gs }}
+			<li>Opponent Goals: {{ stats.og }}
+		</ul>
+	</div>
+{% endblock %}
+
+{% block graph %}
+	<div class=standard>
+		<p>Milestones:</p>
+		<ul>
+			<li>Biggest Win: 
+			{% if milestones.bw %}
+				<a href="/team/{{ milestones.bw.home.id }}" target="_new">{{ milestones.bw.home }}</a> vs. 
+				<a href="/team/{{ milestones.bw.away.id }}" target="_new">{{ milestones.bw.away }}</a>: 
+				{{ milestones.bw.home_score }}-{{ milestones.bw.away_score }} ({{ milestones.bw.when }})
+			{% endif %}
+			<li>Biggest Loss: 
+			{% if milestones.bl %}
+				<a href="/team/{{ milestones.bl.home.id }}" target="_new">{{ milestones.bl.home }}</a> vs. 
+				<a href="/team/{{ milestones.bl.away.id }}" target="_new">{{ milestones.bl.away }}</a>: 
+				{{ milestones.bl.home_score }}-{{ milestones.bl.away_score }} ({{ milestones.bl.when }})
+			{% endif %}
+			<li>Most Goals Scored: 
+			{% if milestones.mgs %}
+				<a href="/team/{{ milestones.mgs.home.id }}" target="_new">{{ milestones.mgs.home }}</a> vs. 
+				<a href="/team/{{ milestones.mgs.away.id }}" target="_new">{{ milestones.mgs.away }}</a>: 
+				{{ milestones.mgs.home_score }}-{{ milestones.mgs.away_score }} ({{ milestones.mgs.when }})
+			{% endif %}
+			<li>Most Goals Received: 
+			{% if milestones.mgr %}
+				<a href="/team/{{ milestones.mgr.home.id }}" target="_new">{{ milestones.mgr.home }}</a> vs. 
+				<a href="/team/{{ milestones.mgr.away.id }}" target="_new">{{ milestones.mgr.away }}</a>: 
+				{{ milestones.mgr.home_score }}-{{ milestones.mgr.away_score }} ({{ milestones.mgr.when }})		
+			{% endif %}
+		</ul>
+	</div>
+{% endblock %}
+

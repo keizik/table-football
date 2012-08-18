@@ -1,0 +1,32 @@
+{% extends "index.html" %}
+
+{% block links %}
+	<div>
+		<a href="{% url home %}" />Home</a>
+		<a href="{% url maker %}" />Match Maker</a>
+	</div>
+{% endblock %}
+
+{% block form %}
+{% endblock %}
+
+{% block rank %}
+	<div class=standard>
+	{% if ranks %}
+		<p>Ranking:</p>
+	{% endif %}
+	<ol>
+	{% for rank in ranks %}
+		<li><a href="/team/{{ rank.id }}" target="_new">{{ rank.team }}</a>: {{ rank.pt }} points
+    {% endfor %}
+	</ol>
+	</div>
+{% endblock %}
+
+{% block graph %}
+	<div class=standard>
+		{% if ranks %}
+			<img src={{ MEDIA_URL }}overviewChart.png />
+		{% endif %}
+	</div>
+{% endblock %}

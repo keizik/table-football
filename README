@@ -1,0 +1,1 @@
+Table Football statistics app. Django project. by Aleksandr Keizik (keizik.tk)2012CONFIGURATION:Input full path to the src/table-football folder into src/table-football/tf/setting.py OUR_PATH variable.

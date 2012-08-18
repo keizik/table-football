@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+.standard {
+	float: left;
+	min-width: 100px;
+	margin-left: 10px;
+}
+</style>
+</head>
+
+<body>
+{% block title %}
+	<h1>{{ title }}</h1>
+{% endblock %}
+
+{% block links %}
+	<div>
+		<a href="{% url maker %}" />Match Maker</a>
+		<a href="{% url overview %}" />Week Overview</a>
+	</div>
+{% endblock %}
+	
+<p><font color=green>{{ msg }}</font><font color=red>{{ error }}</font></p>
+	
+{% block form %}
+
+	{% if form.errors %}
+		<p>Wrong data</p>
+	{% endif %}
+	<form method="post" action="{% url home %}">{% csrf_token %}
+		<b>Home Team:</b></br>
+		{% for field in homeTeamForm %}
+        <div class="fieldWrapper">
+            {{ field.errors }}
+            {{ field.label_tag }}: {{ field }}
+			{% if field.name == "players" %}
+				<a href="/admin/football/player/add">Add player</a>
+				<i>(hold Ctrl to select more than one player)</i>
+			{% endif %}
+        </div>
+		{% endfor %}
+		<br><b>Away Team:</b></br>
+		{% for field in awayTeamForm %}
+        <div class="fieldWrapper">
+            {{ field.errors }}
+            {{ field.label_tag }}: {{ field }}
+			{% if field.name == "players" %}
+				<a href="/admin/football/player/add">Add player</a>
+				<i>(hold Ctrl to select more than one player)</i>
+			{% endif %}
+        </div>
+		{% endfor %}
+		<br><b>Scores:</b></br>
+		{{ scoreForm.as_p }}
+		<input type="submit" value="post" />
+	</form>
+{% endblock %}
+
+{% block scores %}
+	<div class=standard>
+	{% if scores %}
+		<p>Scores:</p>
+	{% endif %}
+	<ol>
+	{% for score in scores %}
+		<li><a href="/team/{{ score.home.id }}" target="_new">{{ score.home }}</a> vs. 
+			<a href="/team/{{ score.away.id }}" target="_new">{{ score.away }}</a>: {{ score.home_score }}-{{ score.away_score }}
+    {% endfor %}
+	</ol>
+	</div>
+{% endblock %}
+
+{% block rank %}
+	<div class=standard>
+	{% if ranks %}
+		<p>Ranking:</p>
+	{% endif %}
+	<ol>
+	{% for rank in ranks %}
+		<li><a href="/team/{{ rank.id }}" target="_new">{{ rank.name }}</a>: {{ rank.points }} points
+    {% endfor %}
+	</ol>
+	</div>
+{% endblock %}
+
+{% block graph %}
+	<div class=standard>
+		{% if ranks %}
+			<img src={{ MEDIA_URL }}chart.png />
+		{% endif %}
+	</div>
+{% endblock %}
+
+</body>
+</html>
